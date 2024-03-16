@@ -8,6 +8,8 @@ myPeer.on("open", userId => {
     socket.emit("join-room", roomId, userId)
 })
 
+const peer = {}
+
 
 // handeling and adding video to the browser 
 const videoGrid = document.getElementById("video-grid")
@@ -35,9 +37,15 @@ navigator.mediaDevices.getUserMedia({
             addVideoStream(video, userVideoStream)
         })
 
-        call.on("close", ()=>{
+        call.on("close", () => {
             video.remove()
         })
+    })
+
+    socket.on("user-disconnected", userId => {
+        if (peer[userId]) {
+            peer[userId].close()
+        }
     })
 })
 
@@ -62,6 +70,8 @@ connectToNewUser = (userId, stream) => {
     call.on("close", () => {
         video.remove()
     })
+
+    peer[userId] = call
 
 }
 
