@@ -25,6 +25,7 @@ navigator.mediaDevices.getUserMedia({
     addVideoStream(myVideo, stream)
 
     socket.on("user-connected", userId => {
+        console.log("user Connected: ", userId)
         connectToNewUser(userId, stream)
     })
 
@@ -58,7 +59,7 @@ function addVideoStream(video, stream) {
     videoGrid.append(video)
 }
 
-connectToNewUser = (userId, stream) => {
+connectToNewUser =  (userId, stream) => {
     const call = myPeer.call(userId, stream)
 
     const video = document.createElement("video")

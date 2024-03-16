@@ -1,9 +1,11 @@
+require("dotenv").config()
 const express = require("express")
 const { Socket } = require("socket.io")
 const app = express()
 const server = require("http").Server(app)
 const io = require("socket.io")(server)
 const {v4: uuidv4} = require("uuid")
+
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
@@ -32,7 +34,8 @@ io.on("connection", (socket)=>{
     })
 })
 
+const PORT = process.env.PORT || 3000
 
-server.listen(3000, ()=>{
-    console.log("Server is running")
+server.listen(PORT, ()=>{
+    console.log("Server is running on : ", PORT)
 })
